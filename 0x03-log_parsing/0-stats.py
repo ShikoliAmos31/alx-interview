@@ -1,11 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Log parsing script that reads from stdin and computes metrics.
 """
 
 import sys
 import signal
-
 
 def print_stats(total_size, status_codes):
     """
@@ -16,14 +15,12 @@ def print_stats(total_size, status_codes):
         if status_codes[code] > 0:
             print(f"{code}: {status_codes[code]}")
 
-
 def signal_handler(sig, frame):
     """
     Signal handler to catch keyboard interrupt and print stats before exiting.
     """
     print_stats(total_size, status_codes)
     sys.exit(0)
-
 
 if __name__ == "__main__":
     total_size = 0
