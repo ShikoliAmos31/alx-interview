@@ -40,8 +40,8 @@ try:
             counter += 1
 
             if counter <= 10:
-                total_file_size += int(parsed_line[0])  # file size
-                code = parsed_line[1]  # status code
+                total_file_size += int(parsed_line[0])
+                code = parsed_line[1]
 
                 if (code in dict_sc.keys()):
                     dict_sc[code] += 1
