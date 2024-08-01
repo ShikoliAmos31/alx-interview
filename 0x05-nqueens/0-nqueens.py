@@ -1,43 +1,59 @@
 #!/usr/bin/python3
-"""N-Queens Problem"""
+"""doc doc doc"""
 import sys
 
-if len(sys.argv) != 2:
-    print("Usage: nqueens N")
-    exit(1)
 
-if not sys.argv[1].isdigit():
-    print("N must be a number")
-    exit(1)
+def solve_queens_problem(board_size):
+    """doc doc doc"""
 
-if int(sys.argv[1]) < 4:
-    print("N must be at least 4")
-    exit(1)
+    def is_valid_position(pos, occupied_pos):
+        """doc doc doc"""
+        for i in range(len(occupied_pos)):
+            if (
+                occupied_pos[i] == pos or
+                occupied_pos[i] - i == pos - len(occupied_pos) or
+                occupied_pos[i] + i == pos + len(occupied_pos)
+            ):
+                return False
+        return True
 
-n = int(sys.argv[1])
+    def place_queens(board_size, index, occupied_pos, solutions):
+        """doc doc doc"""
+        if index == board_size:
+            solutions.append(occupied_pos[:])
+            return
 
+        for i in range(board_size):
+            if is_valid_position(i, occupied_pos):
+                occupied_pos.append(i)
+                place_queens(board_size, index + 1, occupied_pos, solutions)
+                occupied_pos.pop()
 
-def queens(n, i=0, a=[], b=[], c=[]):
-    """Find possible positions for queens."""
-    if i < n:
-        for j in range(n):
-            if j not in a and i + j not in b and i - j not in c:
-                yield from queens(n, i + 1, a + [j], b + [i + j], c + [i - j])
-    else:
-        yield a
-
-
-def solve(n):
-    """Solve the N-Queens problem."""
-    k = []
-    i = 0
-    for solution in queens(n, 0):
-        for s in solution:
-            k.append([i, s])
-            i += 1
-        print(k)
-        k = []
-        i = 0
+    solutions = []
+    place_queens(board_size, 0, [], solutions)
+    return solutions
 
 
-solve(n)
+def main():
+    """doc doc doc"""
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        sys.exit(1)
+
+    try:
+        board_size = int(sys.argv[1])
+    except ValueError:
+        print("N must be a number")
+        sys.exit(1)
+
+    if board_size < 4:
+        print("N must be at least 4")
+        sys.exit(1)
+
+    solutions = solve_queens_problem(board_size)
+    for solution in solutions:
+        print([[i, solution[i]] for i in range(len(solution))])
+
+
+if __name__ == "__main__":
+    main()
